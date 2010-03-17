@@ -56,7 +56,7 @@ use.  Check the specific doc strnigs for more information."
 ;; Constants
 ;;--------------------------
 
-(def default-format :basic-date-time-no-ms)
+(def default-format :date-time-no-ms)
 
 (def #^{:doc "This is a map of available formatters that can be
 used with date pasing.  They come from the ISO8601 standard.  Use the
@@ -375,7 +375,9 @@ ISO8601 parser to use."
 (defn valid-range? 
   "Tests to determine if the range is valid, i.e.
 start is before finish." 
-  [[start end]] (earlier? start end))
+  [[start end]]
+  (if (and start end)
+    (earlier? start end)))
 
 (defn is-within? 
   "Tests to see if a date d is within a range specified
