@@ -375,16 +375,18 @@ ISO8601 parser to use."
 (defn valid-range? 
   "Tests to determine if the range is valid, i.e.
 start is before finish." 
-  [[start end]]
-  (if (and start end)
-    (earlier? start end)))
+  ([[start end]] (valid-range? start end))
+  ([start end]
+     (if (and start end)
+       (earlier? start end))))
 
 (defn is-within? 
   "Tests to see if a date d is within a range specified
 by start and end"
   [d [start end]]
-  (and (earlier? start d)
-       (earlier? d end)))
+  (if (and start end)
+    (and (earlier? start d)
+	 (earlier? d end))))
 
 (defn are-overlapping? 
   "Tests to see if two ranges are overlapping.  i.e. 
@@ -436,11 +438,11 @@ in the same interval as the fn name."
    (let [standard-period (method #^Period(period-between start end))
 	 field-type (.getFieldType standard-period 0)]
      (.get standard-period field-type)))
- secs-between .getStandardSeconds
- minutes-between .getStandardMinutes
- hours-between .getStandardHours
- days-between .getStandardDays
- weeks-between .getStandardWeeks)
+ secs-between .toStandardSeconds
+ minutes-between .toStandardMinutes
+ hours-between .toStandardHours
+ days-between .toStandardDays
+ weeks-between .toStandardWeeks)
 
 (defn +periods
   "A fn to add joda period objects.  Returns a period."
