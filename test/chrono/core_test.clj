@@ -196,4 +196,3 @@
   (is (= (list (hours-from you -1) you (hours-from you 1))
          (hours-around (range -1 2) you)))))
 )
-;(run-tests)
